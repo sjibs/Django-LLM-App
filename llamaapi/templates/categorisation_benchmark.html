@@ -8,5 +8,16 @@
 <body>
     <h1>Welcome to the Categorisation Benchmark Page</h1>
     <p>This page is accessible only to users with the required permission.</p>
+
+    <h2>Google Sheets Data:</h2>
+    <table border="1">
+        {% for row in sheet_data %}
+        <tr>
+            {% for cell in row %}
+            <td>{{ cell }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
 </body>
 </html>

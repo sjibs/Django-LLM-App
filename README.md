@@ -7,6 +7,12 @@ To install requirements
 pip install -r requirements.txt.
 ```
 
+Navigate to 
+```
+service-accounts/service-account-key.json
+```
+and replace with a service account key
+
 To run the server
 ```
 source ./.venv/bin/activate
