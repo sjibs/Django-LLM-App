@@ -34,7 +34,53 @@
 
         <button type="submit">Submit</button>
       </form>
-      <div class="statistics panel"></div>
+      <div class="statistics panel">
+        {% if not processed_data %}
+        <h2>Using the prompt</h2>
+        <p>Enter a system prompt and select your criteria.</p>
+        <p>
+          The LLM will run your prompt against each review and compare it
+          against human analysis. The Human analysis and test cases are
+          <a
+            href="https://docs.google.com/spreadsheets/d/1KohLpqhZJkHM5OsRTHunWZ_OWK9NaUMcWlTzwq64f-8/edit?gid=0#gid=0"
+            target="_blank"
+            >Available Here</a
+          >
+        </p>
+        <p>To make use of this tool:</p>
+        <ul>
+          <li>Enter your desired prompt</li>
+          <li>Add formatting instructions (shown below)</li>
+          <li>Press submit to run it on the server</li>
+        </ul>
+
+        <p class="note">
+          <strong>Format your responses as so:</strong>
+          <br />{<br />
+          'rationale': 'up to 50 words describing exactly *why* you put Y or
+          N’<br />
+          'spending': '[one of Y or N]',<br />
+          }<br />
+          Do not respond with anything other than a Y or a N.
+        </p>
+        {% else %}
+        <h2>Results</h2>
+
+        {% endif %}
+      </div>
+      {% if processed_data %}
+      <div class="reviews-feed">
+        {% for review in processed_data.processed_reviews %}
+        <div class="review-item">
+            <h3>Review ID: {{ review.id }}</h3>
+            <p><strong>Review Text:</strong> {{ review.text }}</p>
+            <p><strong>Rationale:</strong> {{ review.rationale }}</p>
+            <p><strong>Verdict:</strong> {{ review.matchesCriteria }}</p>
+            <p><strong>Is correct:</strong> {{ review.isCorrect }}</p>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
     </div>
   </body>
 </html>
