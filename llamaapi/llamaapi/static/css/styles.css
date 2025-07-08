@@ -1,0 +1,76 @@
+:root {
+    --primary-color: #6a0dad; 
+    --primary-hover-color: #4b0082;
+    --background-color: #f4f4f4;
+    --text-color: #333;
+    --form-background-color: #fff;
+    --border-color: #ccc;
+    --button-text-color: white;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: var(--text-color);
+}
+.panel-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 20px;
+}
+
+.panel {
+    max-width: 600px;
+    background: var(--form-background-color);
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+form {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+select, textarea, button {
+    width: 100%;
+    margin-bottom: 16px;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+textarea {
+    width: calc(100% - 22px);
+    height: 400px;
+    resize: vertical;
+}
+button {
+    max-width: 250px;
+    margin-left: auto;
+    align-self: right;
+}
+
+button {
+    background-color: var(--primary-color);
+    color: var(--button-text-color);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: var(--primary-hover-color);
+    transform: scale(1.05);
+}

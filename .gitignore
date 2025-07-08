@@ -1,2 +1,2 @@
 service-accounts/service-account-key.json
-/llamaapi/llamaapi/__pycache__
+*.pyc
