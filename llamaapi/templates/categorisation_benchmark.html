@@ -1,23 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Categorisation Benchmark</title>
-</head>
-<body>
-    <h1>Welcome to the Categorisation Benchmark Page</h1>
-    <p>This page is accessible only to users with the required permission.</p>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/styles.css' %}"
+    />
+  </head>
+  <body>
+    <h1>Categorisation Benchmark Page</h1>
+    <div class="panel-layout">
+      <form class="panel" method="POST" action="/categorisation-benchmark/">
+        {% csrf_token %}
+        <label for="table-heading">Criteria:</label>
+        <select id="table-heading" name="table_heading">
+          {% for column_id, heading in sheet_data.items %}
+          <option value="{{ column_id }}">{{ heading }}</option>
+          {% endfor %}
+        </select>
 
-    <h2>Google Sheets Data:</h2>
-    <table border="1">
-        {% for row in sheet_data %}
-        <tr>
-            {% for cell in row %}
-            <td>{{ cell }}</td>
-            {% endfor %}
-        </tr>
-        {% endfor %}
-    </table>
-</body>
+        <label for="system-prompt">System Prompt:</label>
+        <textarea
+          id="system-prompt"
+          name="system_prompt"
+          rows="4"
+          cols="50"
+          placeholder="Enter your system prompt here..."
+        ></textarea>
+
+        <button type="submit">Submit</button>
+      </form>
+      <div class="statistics panel"></div>
+    </div>
+  </body>
 </html>
