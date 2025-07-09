@@ -1,22 +1,25 @@
 # Django LLM App
- Django App that provides a REST interface and backend access to manage prompts
 
+Django App that provides a REST interface and backend access to manage prompts
 
 To install requirements
+
 ```
 pip install -r requirements.txt.
 ```
 
-Navigate to 
+Navigate to
+
 ```
 service-accounts/service-account-key.json
 ```
-and replace with a service account key
+
+and replace with a service account
 
 To run the server
+
 ```
 source ./.venv/bin/activate
-cd ./llamaapi
-python manage.py createsuperuser
+./llamaapi/manage.py  createsuperuser #first time only
 ./llamaapi/manage.py runserver
 ```

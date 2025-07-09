@@ -1,11 +1,13 @@
 from django.contrib.auth.decorators import permission_required
 from django.shortcuts import render
-from llamaapi.google_sheets import get_sheet_headings
-from django.shortcuts import render
-from llamaapi.google_sheets import get_google_sheets_data
+from llamaapi.google_sheets import get_sheet_headings, get_google_sheets_data
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import io
+import base64
 
 @permission_required('llamaapi.view_categorisation_benchmark', raise_exception=True)
-
 def categorisation_benchmark(request):
     sheet_heading_data = get_sheet_headings()
     if request.method == "POST":
@@ -16,11 +18,42 @@ def categorisation_benchmark(request):
         # Fetch and process data from Google Sheets
         processed_reviews = get_google_sheets_data(table_heading)
 
+        # Calculate accuracy metrics
+        correct_count = sum(1 for review in processed_reviews if review["isCorrect"])
+        total_count = len(processed_reviews)
+        accuracy_percentage = (correct_count / total_count * 100) if total_count > 0 else 0
+
+        # Generate pie chart
+        def generate_pie_chart(correct_count, total_count):
+            labels = ['Correct', 'Incorrect']
+            sizes = [correct_count, total_count - correct_count]
+            colors = ['#6a0dad', '#ccc']
+            explode = (0.1, 0)  # Explode the 'Correct' slice
+
+            plt.figure(figsize=(6, 4))
+            plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.1f%%', startangle=90)
+            plt.axis('equal')  # Equal aspect ratio ensures the pie chart is circular
+
+            # Save the chart to a BytesIO object
+            buffer = io.BytesIO()
+            plt.savefig(buffer, format='png')
+            buffer.seek(0)
+            chart_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+            buffer.close()
+
+            return chart_base64
+
+        pie_chart = generate_pie_chart(correct_count, total_count)
+
         # Prepare processed data object
         processed_data = {
             "processed_reviews": processed_reviews,
             "selected_prompt": system_prompt,
             "selected_heading": table_heading,
+            "accuracy_percentage": accuracy_percentage,
+            "correct_count": correct_count,
+            "total_count": total_count,
+            "pie_chart": pie_chart,
         }
 
         # Render the template with processed data

@@ -71,11 +71,15 @@
             file</strong
           >
           <br />
-          This website does not automatically save your prompts {% else %}
+          This website does not automatically save your prompts 
         </p>
-
+        {% else %}
         <h2>Results</h2>
-
+        <p><strong>Accuracy Percentage:</strong> {{ processed_data.accuracy_percentage }}%</p>
+        <p><strong>Correct Count:</strong> {{ processed_data.correct_count }}</p>
+        <p><strong>Total Count:</strong> {{ processed_data.total_count }}</p>
+        <h3>Accuracy Chart</h3>
+        <img src="data:image/png;base64,{{ processed_data.pie_chart }}" alt="Accuracy Pie Chart">
         {% endif %}
       </div>
       {% if processed_data %}
