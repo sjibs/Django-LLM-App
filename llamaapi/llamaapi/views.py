@@ -5,11 +5,14 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import io
+import os
 import base64
 
 @permission_required('llamaapi.view_categorisation_benchmark', raise_exception=True)
 def categorisation_benchmark(request):
     sheet_heading_data = get_sheet_headings()
+    spreadsheet_id = os.getenv('ASSESSMENT_SPREADSHEET_ID')
+
     if request.method == "POST":
         # Get the submitted data from the form
         table_heading = request.POST.get("table_heading")
@@ -57,6 +60,6 @@ def categorisation_benchmark(request):
         }
 
         # Render the template with processed data
-        return render(request, "categorisation_benchmark.html", {"processed_data": processed_data, "sheet_data": sheet_heading_data})
+        return render(request, "categorisation_benchmark.html", {"processed_data": processed_data, "sheet_data": sheet_heading_data,'spreadsheet_id': spreadsheet_id,})
 
-    return render(request, 'categorisation_benchmark.html', {'sheet_data': sheet_heading_data})
+    return render(request, 'categorisation_benchmark.html', {'sheet_data': sheet_heading_data, 'spreadsheet_id': spreadsheet_id,})
