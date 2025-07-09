@@ -1,25 +1,60 @@
 # Django LLM App
 
-Django App that provides a REST interface and backend access to manage prompts
+A Django app that provides a REST interface and backend access to manage prompts.
 
-To install requirements
+---
 
+## Installation
+
+1. **Clone the repository**  
+   _(if you haven’t already)_
+
+2. **Create and activate a virtual environment**
+
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate
+   ```
+
+3. **Install requirements**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+---
+
+## Google Service Account Setup
+
+1. Navigate to:
+   ```
+   service-accounts/service-account-key.json
+   ```
+2. Replace this file with your own Google service account key.
+
+---
+
+## Running the Server
+
+```bash
+source .venv/bin/activate
+cd llamaapi
+python manage.py createsuperuser  # Run this only the first time
+python manage.py runserver
 ```
-pip install -r requirements.txt.
+
+---
+
+## Updating Requirements
+
+To save the current state of your pip environment:
+
+```bash
+pip freeze > requirements.txt
 ```
 
-Navigate to
+---
 
-```
-service-accounts/service-account-key.json
-```
+## Notes
 
-and replace with a service account
-
-To run the server
-
-```
-source ./.venv/bin/activate
-./llamaapi/manage.py  createsuperuser #first time only
-./llamaapi/manage.py runserver
-```
+- Make sure your `.env` file and service account are properly configured.
+- For any issues, check the Django and Google Sheets integration documentation.
