@@ -12,9 +12,9 @@
     />
   </head>
   <body>
-    <h1>Categorisation Benchmark Page</h1>
+    <h1>Categorisation Benchmark Admin</h1>
     <div class="panel-layout">
-      <form class="panel" method="POST" action="/categorisation-benchmark/">
+      <form class="panel" method="POST" action="/benchmark/">
         {% csrf_token %}
         <label for="table-heading">Criteria:</label>
         <select id="table-heading" name="table_heading">
@@ -63,7 +63,15 @@
           }<br />
           Do not respond with anything other than a Y or a N.
         </p>
-        {% else %}
+        <p>
+          <strong
+            >Please be sure to save your best performing prompts in a text
+            file</strong
+          >
+          <br />
+          This website does not automatically save your prompts {% else %}
+        </p>
+
         <h2>Results</h2>
 
         {% endif %}
@@ -71,12 +79,14 @@
       {% if processed_data %}
       <div class="reviews-feed">
         {% for review in processed_data.processed_reviews %}
-        <div class="review-item">
-            <h3>Review ID: {{ review.id }}</h3>
-            <p><strong>Review Text:</strong> {{ review.text }}</p>
-            <p><strong>Rationale:</strong> {{ review.rationale }}</p>
-            <p><strong>Verdict:</strong> {{ review.matchesCriteria }}</p>
-            <p><strong>Is correct:</strong> {{ review.isCorrect }}</p>
+        <div
+          class="review-item {% if review.isCorrect %}correct{% else %}incorrect{% endif %}"
+        >
+          <p><strong>ID:</strong> {{ review.id }}</p>
+          <p><strong>Review Text:</strong> {{ review.text }}</p>
+          <p><strong>Rationale:</strong> {{ review.rationale }}</p>
+          <p><strong>Categorisation:</strong> {{ review.categorisation }}</p>
+          <p><strong>Is Correct:</strong> {{ review.isCorrect }}</p>
         </div>
         {% endfor %}
       </div>

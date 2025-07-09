@@ -19,6 +19,7 @@ from django.urls import path
 from ninja import NinjaAPI
 from llamaapi.views import categorisation_benchmark
 
+
 api = NinjaAPI()
 
 @api.get("/add")
@@ -28,5 +29,6 @@ def add(request, a: int, b: int):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/", api.urls),
-    path('categorisation-benchmark/', categorisation_benchmark, name='categorisation_benchmark'),
+    path("benchmark/", categorisation_benchmark, name="categorisation_benchmark"),
+
 ]
