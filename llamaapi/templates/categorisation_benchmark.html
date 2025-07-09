@@ -14,26 +14,28 @@
   <body>
     <h1>Categorisation Benchmark Admin</h1>
     <div class="panel-layout">
-      <form class="panel" method="POST" action="/benchmark/">
-        {% csrf_token %}
-        <label for="table-heading">Criteria:</label>
-        <select id="table-heading" name="table_heading">
-          {% for column_id, heading in sheet_data.items %}
-          <option value="{{ column_id }}">{{ heading }}</option>
-          {% endfor %}
-        </select>
-
-        <label for="system-prompt">System Prompt:</label>
-        <textarea
-          id="system-prompt"
-          name="system_prompt"
-          rows="4"
-          cols="50"
-          placeholder="Enter your system prompt here..."
-        ></textarea>
-
-        <button type="submit">Submit</button>
-      </form>
+        <form class="panel" method="POST" action="/benchmark/">
+            {% csrf_token %}
+            <label for="table-heading">Criteria:</label>
+            <select id="table-heading" name="table_heading">
+              {% for column_id, heading in sheet_data.items %}
+              <option value="{{ column_id }}" {% if processed_data.selected_heading == column_id %}selected{% endif %}>
+                {{ heading }}
+              </option>
+              {% endfor %}
+            </select>
+    
+            <label for="system-prompt">System Prompt:</label>
+            <textarea
+              id="system-prompt"
+              name="system_prompt"
+              rows="4"
+              cols="50"
+              placeholder="Enter your system prompt here..."
+            >{% if processed_data.selected_prompt %}{{ processed_data.selected_prompt }}{% endif %}</textarea>
+    
+            <button type="submit">Submit</button>
+          </form>
       <div class="statistics panel">
         {% if not processed_data %}
         <h2>Using the prompt</h2>
